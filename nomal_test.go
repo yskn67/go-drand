@@ -68,3 +68,58 @@ func TestBoxMuller(t *testing.T) {
 		t.Errorf("outlier number is %d in seed 84", outliers)
 	}
 }
+
+func TestPolar(t *testing.T) {
+	rnd := rand.New(rand.NewSource(0))
+
+	// polarFlag test
+	if polarFlag == 0 {
+		_ = polar(rnd, 0, 1)
+		if polarFlag != 1 {
+			t.Error("polarFlag is not toggled")
+		}
+	} else {
+		_ = polar(rnd, 0, 1)
+		if polarFlag != 0 {
+			t.Error("polarFlag is not toggled")
+		}
+	}
+
+	// nomal random sample range test
+	var r float64
+	rnd = rand.New(rand.NewSource(0))
+	outliers := 0
+	for i := 0; i < 100; i++ {
+		r = polar(rnd, 0, 1)
+		if r > 3 || r < -3 {
+			outliers++
+		}
+	}
+	if outliers > 1 {
+		t.Errorf("outlier number is %d in seed 0", outliers)
+	}
+
+	rnd = rand.New(rand.NewSource(34))
+	outliers = 0
+	for i := 0; i < 100; i++ {
+		r = polar(rnd, 0, 1)
+		if r > 3 || r < -3 {
+			outliers++
+		}
+	}
+	if outliers > 1 {
+		t.Errorf("outlier number is %d in seed 34", outliers)
+	}
+
+	rnd = rand.New(rand.NewSource(149))
+	outliers = 0
+	for i := 0; i < 100; i++ {
+		r = polar(rnd, 0, 1)
+		if r > 3 || r < -3 {
+			outliers++
+		}
+	}
+	if outliers > 1 {
+		t.Errorf("outlier number is %d in seed 149", outliers)
+	}
+}
