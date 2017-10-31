@@ -12,7 +12,7 @@ var (
 
 func Nomal(mu, sigma float64, seed int64) float64 {
 	rnd := rand.New(rand.NewSource(seed))
-	return polar(rnd, mu, sigma)
+	return mu + sigma*rnd.NormFloat64()
 }
 
 func boxMuller(rnd *rand.Rand, mu, sigma float64) float64 {
